@@ -2,61 +2,136 @@
 <html lang="en">
 
 <head>
-    <%- include('./partials/head') %>
-        <title>Blog</title>
-        <style>
-            /* Add your custom styles here */
-            .container {
-                max-width: 800px;
-                margin: auto;
-                padding: 20px;
-            }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
 
-            h1 {
-                text-align: center;
-                margin-bottom: 20px;
-            }
+        header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+        }
 
-            img {
-                display: block;
-                margin: auto;
-                width: 100%;
-                max-width: 700px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                margin-bottom: 20px;
-            }
+        .container {
+            background-color: #ffffff;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-            pre {
-                white-space: pre-wrap;
-                font-size: 16px;
-                line-height: 1.5;
-            }
-        </style>
+        .user-info-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .user-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-top: 20px;
+        }
+
+        .comment-section {
+            margin-top: 30px;
+        }
+
+        .comment-container {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .comment-content {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 
 <body>
     <%- include('./partials/nav') %>
 
+
         <div class="container">
-            <img src="<%= blog.createdBy.profileImgeURL %>" width="100px">
+            <div class="user-info-container">
+                <img src="<%= blog.createdBy.profileImageURL %>" class="user-image">
+                <div class="user-info">
+                    <span>
+                        <%= blog.createdBy.fullName %>
+                    </span>
+                </div>
+            </div>
 
             <h1>
                 <%= blog.title %>
             </h1>
-            <img src="<%=blog.coverImageURL%>" alt="Blog Cover Image">
+            <img src="<%= blog.coverImageURL %>" alt="Blog Cover Image">
             <pre><%= blog.body %></pre>
+
+            <div class="comment-section">
+                <h2>
+                    <%= comments.length %> Comments
+                </h2>
+                <% if (locals.user) { %>
+                    <form action="/blog/comment/<%= locals.blog._id %>" method="post">
+                        <div class="form-group">
+                            <input type="text" name="content" class="form-control" placeholder="Add your comment">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Comment</button>
+                    </form>
+                    <% } %>
+
+                        <% comments.forEach(comment=> { %>
+                            <div class="comment-container">
+                                <div class="user-info-container">
+                                    <img src="<%= comment.createdBy.profileImageURL %>" class="user-image">
+                                    <div class="user-info">
+                                        <span>
+                                            <%= comment.createdBy.fullName %>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="comment-content">
+                                    <p>
+                                        <%= comment.content %>
+                                    </p>
+                                </div>
+                            </div>
+                            <% }) %>
+                            <%- include('./partials/scripts') %>
+
+            </div>
         </div>
-
-        <div class="container mt-4" style="display: flex; align-items: center;">
-            <img src="<%= blog.createdBy.profileImageURL %>" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
-            <span><%= blog.createdBy.fullName %></span>
-        </div>
-        
-
-
-
-        <%- include('./partials/scripts') %>
 </body>
 
 </html>

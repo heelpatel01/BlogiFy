@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head') %>
+    <style>
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('./partials/nav') %>
+
+    <div class="container mt-3">
+        <div class="row">
+            <% blogs.forEach(blog=> { %>
+                <div class="col-md-4">
+                    <div class="card mb-3" style="border-radius: 5px; width: 300px; height: 520px">
+                        <img src="<%=blog.coverImageURL%>" class="card-img-top"
+                            style="border-radius: 5px; width: 300px; height: 300px;" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= blog.title %>
+                            </h5>
+                            <p class="card-text">
+                                <%= blog.body.substring(0,100) %>...
+                            </p>
+                            <a href="blog/<%= blog._id %>" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+    </div>
+
+    <%- include('./partials/scripts') %>
+</body>
+
+</html>

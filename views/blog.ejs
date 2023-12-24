@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head') %>
+        <title>Blog</title>
+        <style>
+            /* Add your custom styles here */
+            .container {
+                max-width: 800px;
+                margin: auto;
+                padding: 20px;
+            }
+
+            h1 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            img {
+                display: block;
+                margin: auto;
+                width: 100%;
+                max-width: 700px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                margin-bottom: 20px;
+            }
+
+            pre {
+                white-space: pre-wrap;
+                font-size: 16px;
+                line-height: 1.5;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include('./partials/nav') %>
+
+        <div class="container">
+            <img src="<%= blog.createdBy.profileImgeURL %>" width="100px">
+
+            <h1>
+                <%= blog.title %>
+            </h1>
+            <img src="<%=blog.coverImageURL%>" alt="Blog Cover Image">
+            <pre><%= blog.body %></pre>
+        </div>
+
+        <div class="container mt-4" style="display: flex; align-items: center;">
+            <img src="<%= blog.createdBy.profileImageURL %>" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+            <span><%= blog.createdBy.fullName %></span>
+        </div>
+        
+
+
+
+        <%- include('./partials/scripts') %>
+</body>
+
+</html>
